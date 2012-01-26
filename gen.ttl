@@ -1,31 +1,38 @@
 #TODO owl:equivalentClass to schema.org entities
+#Future work: gen:Name
 
-gen:Name rdf:type owl:Class .
+@prefix gen:	http://example.org/gen/0.1# .
 
-gen:
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@previx event:	http://purl.org/NET/c4dm/event.owl .
+@prefix time:	http://www.w3.org/2006/time .
+@prefix geo:	http://www.w3.org/2003/01/geo/wgs84_pos .
+@prefix schema:	http://schema.org/ .
 
 gen:Person rdf:type owl:Class ;
-	rdfs:subClassOf foaf:Person .
-#	owl:equivalentClass foaf:Person .
+	rdfs:label "Person"@en ;
+	rdfs:comment "A human being"@en ;
+	rdfs:subClassOf foaf:Person ;
+	owl:equivalentClass schema:Person .
 
-gen:name rdf:type rdf:Property ;
-	rdfs:domain gen:Person ;
-	rdfs:range gen:Name .
+gen:Place rdf:type owl:Class ;
+	rdfs:label "Place"@en ;
+	rdfs:comment "A geolocated position"@en ;
+	rdfs:subClassOf geo:SpatialThing .
 
-
-
-
-
-gen:Person < foaf:Person
-
-
-gen:Place < geo:SpatialThing
-
-gen:Time < time:TemporalEntity
+gen:Time rdf:type owl:Class ;
+	rdfs:label "Time"@en ;
+	rdfs:comment "A moment in time or a span of time"@en ;
+	rdfs:subClassOf time:TemporalEntity .
 
 
-#General events
-gen:Event < event:Event
+#----------- Events ----------
+gen:Event rdf:type owl:Class ;
+	rdfs:label "Event"@en ;
+	rdfs:comment "An event"@en ;
+	rdfs:subClassOf event:Event .
 
 #Specific event types
 gen:Marriage < bio:Marriage
@@ -39,5 +46,15 @@ gen:Family?     < rdf:Bag    if relationships cannot be specified by means of bi
 
 #gen:Source < dcterms:BibliographicResource
 
-gen:Fact < 	rdf:Statement
-gen:source : Fact->Thing?  (frbr:Work is an acceptable value, as available from OpenLibrary.)
+#---------- Source Citations ----------
+gen:Fact rdf:type owl:Class ;
+	rdfs:label "Fact"@en ;
+	rdfs:comment "An assertion of fact supported by sources"@en ;
+	rdfs:subClassOf rdf:Statement .
+#TODO: Recommend range of frbr:Work
+gen:source rdf:type rdf:Property ;
+	rdfs:label "Source"@en ;
+	rdfs:comment "A source justifying some claim of fact"@en ;
+	rdfs:domain gen:Fact ;
+	rdfs:range owl:Thing .
+
