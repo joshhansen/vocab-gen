@@ -73,14 +73,6 @@ event:Event a owl:Class;
 
 #---------- Family Tree Structures ----------
 
-:FamilyTree a owl:Class ;
-	rdfs:label "Family Tree"@en ;
-	rdfs:comment """This container class should be populated with individual people, families, or other records
-		that constitute a single 'family tree'. It is intended to help users in management of their
-		genealogical data."""@en ;
-	rdfs:subClassOf rdf:Bag ;
-	vs:term_status "testing" .
-
 :Family a owl:Class ;
 	rdfs:label "Family"@en ;
 	rdfs:comment """Though it is preferred to represent families by describing the relationships between its members
@@ -96,6 +88,52 @@ event:Event a owl:Class;
 	rdfs:domain :Family ;
 	rdfs:range foaf:Person ;
 	vs:term_status "testing" .
+
+:parent a rdf:Property ;
+	rdfs:comment "Prefixed with 'family' to disambiguate from 
+	rdfs:domain :Family ;
+	rdfs:range foaf:Person ;
+	rdfs:subPropertyOf :familyMember .
+
+:mother a rdf:Property ;
+	rdfs:domain :Family ;
+	rdfs:range foaf:Person ;
+	rdfs:subPropertyOf :parent .
+
+:father a rdf:Property ;
+	rdfs:domain :Family ;
+	rdfs:range foaf:Person ;
+	rdfs:subPropertyOf :parent .
+
+:stepParent a rdf:Property ;
+	rdfs:domain :Family ;
+	rdfs:range foaf:Person ;
+	rdfs:subPropertyOf :parent .
+
+:stepMother a rdf:Property ;
+	rdfs:domain :Family ;
+	rdfs:range foaf:Person ;
+	rdfs:subPropertyOf :stepParent .
+
+:stepFather a rdf:Property ;
+	rdfs:domain :Family ;
+	rdfs:range foaf:Person ;
+	rdfs:subPropertyOf :stepParent .
+
+:child a rdf:Property ;
+	rdfs:domain :Family ;
+	rdfs:range foaf:Person ;
+	rdfs:subPropertyOf :familyMember .
+
+:FamilyTree a owl:Class ;
+	rdfs:label "Family Tree"@en ;
+	rdfs:comment """This container class should be populated with individual people, families, or other records
+		that constitute a single 'family tree'. It is intended to help users in management of their
+		genealogical data."""@en ;
+#	rdfs:subClassOf rdf:Bag ;
+	vs:term_status "testing" .
+
+
 
 #---------- Events ----------
 #Though this vocabulary standardizes on the event:Event class (imported above), we here repeat a number of event classes
@@ -182,7 +220,7 @@ bio:Burial rdf:type owl:Class ;
 	rdfs:domain foaf:Person ;
 	rdfs:range bio:Birth ;
 	rdfs:subPropertyOf :lifeEvent, bio:event ;
-	owl:inverseOf :child .
+	owl:inverseOf :newborn .
 
 :death rdf:type rdf:Property ;
 	rdfs:label "death"@en ;
@@ -206,22 +244,22 @@ bio:Burial rdf:type owl:Class ;
 	rdfs:domain bio:Marriage ;
 	rdfs:range foaf:Person .
 
-:parent rdf:type rdf:Property ;
+:birthParent rdf:type rdf:Property ;
 	rdfs:domain bio:Birth ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :participant, bio:parent .
 
-:father rdf:type rdf:Property ;
+:birthFather rdf:type rdf:Property ;
 	rdfs:domain bio:Birth ;
 	rdfs:range foaf:Person ;
-	rdfs:subPropertyOf :parent .
+	rdfs:subPropertyOf :birthParent .
 
-:mother rdf:type rdf:Property ;
+:birthMother rdf:type rdf:Property ;
 	rdfs:domain bio:Birth ;
 	rdfs:range foaf:Person ;
-	rdfs:subPropertyOf :parent .
+	rdfs:subPropertyOf :birthParent .
 
-:child rdf:type rdf:Property ;
+:newborn rdf:type rdf:Property ;
 	rdfs:domain bio:Birth ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :participant, bio:principal ;
