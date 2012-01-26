@@ -1,0 +1,43 @@
+#TODO owl:equivalentClass to schema.org entities
+
+gen:Name rdf:type owl:Class .
+
+gen:
+
+gen:Person rdf:type owl:Class ;
+	rdfs:subClassOf foaf:Person .
+#	owl:equivalentClass foaf:Person .
+
+gen:name rdf:type rdf:Property ;
+	rdfs:domain gen:Person ;
+	rdfs:range gen:Name .
+
+
+
+
+
+gen:Person < foaf:Person
+
+
+gen:Place < geo:SpatialThing
+
+gen:Time < time:TemporalEntity
+
+
+#General events
+gen:Event < event:Event
+
+#Specific event types
+gen:Marriage < bio:Marriage
+
+
+
+
+
+
+gen:Family?     < rdf:Bag    if relationships cannot be specified by means of birth/marriage/other events, but the people are considered a family
+
+#gen:Source < dcterms:BibliographicResource
+
+gen:Fact < 	rdf:Statement
+gen:source : Fact->Thing?  (frbr:Work is an acceptable value, as available from OpenLibrary.)
