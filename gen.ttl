@@ -1,4 +1,4 @@
-#TODO owl:equivalentClass to schema.org entities
+#TODO owl:equivalentClass to schema.org entities?
 
 @prefix :	<http://purl.org/gen/0.1#> .
 
@@ -6,6 +6,7 @@
 @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:	<http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 #Domains
 @prefix foaf:	<http://xmlns.com/foaf/0.1/> .
@@ -16,6 +17,7 @@
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 
 #Meta
+@prefix dct: <http://purl.org/dc/terms/> .
 @prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
 @prefix vann:	<http://purl.org/vocab/vann/> .
 
@@ -28,11 +30,11 @@
 #        <p></p>
 #      </div>"""^^rdf:XMLLiteral ;
 #                                 dct:identifier "http://purl.org/vocab/bio/0.1/schema" ;
-	dct:creator "Josh Hansen" ;
-	dct:rights "Copyright © 2012 FamilySearch" ;
+	dct:creator "Josh Hansen"@en ;
+	dct:rights "Copyright © 2012 FamilySearch"@en ;
 	dct:issued "2012-01-25"^^xsd:date ;
-	vann:preferredNamespaceUri "http://purl.org/gen/0.1/" ;
-	vann:preferredNamespacePrefix "gen" ;
+	vann:preferredNamespaceUri "http://purl.org/gen/0.1/"@en ;
+	vann:preferredNamespacePrefix "gen"@en .
 
 
 
@@ -121,10 +123,10 @@ event:Event a owl:Class;
 foaf:name a rdf:Property, owl:DatatypeProperty ;
 	rdfs:label "name" ;
 	rdfs:comment "A name for some thing." ;
-	rdfs:subPropertyOf rdfs:label .
+	rdfs:subPropertyOf rdfs:label ;
 	rdfs:domain owl:Thing ;
 	rdfs:range rdfs:Literal ;
-	rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> ;
+	rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
 
 foaf:givenName a rdf:Property, owl:DatatypeProperty ;
 	rdfs:label "Given name" ;
