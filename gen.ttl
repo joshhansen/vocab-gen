@@ -2,21 +2,43 @@
 
 @prefix :	<http://purl.org/gen/0.1#> .
 
+#Infrastructure
 @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
-@prefix foaf:	<http://xmlns.com/foaf/0.1/> .
 @prefix owl:	<http://www.w3.org/2002/07/owl#> .
+
+#Domains
+@prefix foaf:	<http://xmlns.com/foaf/0.1/> .
 @prefix event:	<http://purl.org/NET/c4dm/event.owl> .
 @prefix time:	<http://www.w3.org/2006/time> .
 @prefix geo:	<http://www.w3.org/2003/01/geo/wgs84_pos> .
 @prefix schema:	<http://schema.org/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 
+#Meta
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
 @prefix vann:	<http://purl.org/vocab/vann/> .
 
 
-#---------- "Imports" ----------
-#Classes either defined in or directly aliased from other vocabularies
+<http://purl.org/gen/0.1#> rdf:type owl:Ontology ;
+	dct:title "Genealogy Vocabulary"@en ;
+	dct:date "2012-01-25"^^xsd:date ;
+	dct:abstract "An simple RDF vocabulary containing terms to facilitate the linking of genealogical data."@en ;
+#	dct:description """<div>
+#        <p></p>
+#      </div>"""^^rdf:XMLLiteral ;
+#                                 dct:identifier "http://purl.org/vocab/bio/0.1/schema" ;
+	dct:creator "Josh Hansen" ;
+	dct:rights "Copyright © 2012 FamilySearch" ;
+	dct:issued "2012-01-25"^^xsd:date ;
+	vann:preferredNamespaceUri "http://purl.org/gen/0.1/" ;
+	vann:preferredNamespacePrefix "gen" ;
+
+
+
+#---------- "Imported" Classes ----------
+#Classes either defined in or directly aliased from other vocabularies, and which are recommend for use in deployment of genealogical Linked Data
+
 foaf:Person a rdfs:Class ;
 	rdfs:label "Person" ;
 	rdfs:comment "A person." ;
@@ -37,78 +59,134 @@ event:Event a owl:Class;
 :Place a owl:Class ;
 	rdfs:label "Place"@en ;
 	rdfs:comment "A geolocated position"@en ;
-	rdfs:subClassOf geo:SpatialThing .
+	rdfs:subClassOf geo:SpatialThing ;
+	vs:term_status "testing" .
 
 :Time a owl:Class ;
 	rdfs:label "Time"@en ;
 	rdfs:comment "A moment in time or a span of time"@en ;
-	rdfs:subClassOf time:TemporalEntity .
+	rdfs:subClassOf time:TemporalEntity ;
+	vs:term_status "testing" .
+
+
+#---------- Family Tree Structures ----------
 
 :FamilyTree a owl:Class ;
 	rdfs:label "Family Tree"@en ;
-	rdfs:comment "This container class should be populated with individual people, families, or other records that constitute a single 'family tree'. It is intended to help users in management of their genealogical data."@en ;
-	rdfs:subClassOf rdf:Bag .
+	rdfs:comment """This container class should be populated with individual people, families, or other records
+		that constitute a single 'family tree'. It is intended to help users in management of their
+		genealogical data."""@en ;
+	rdfs:subClassOf rdf:Bag ;
+	vs:term_status "testing" .
 
 :Family a owl:Class ;
 	rdfs:label "Family"@en ;
-	rdfs:comment "Though it is preferred to represent families by describing the relationships between its members (parent-child, husband-wife, etc.) this class can be used to represent a group of people who are considered to be a family unit."@en ;
-	rdfs:subClassOf rdf:Bag .
+	rdfs:comment """Though it is preferred to represent families by describing the relationships between its members
+		(parent-child, husband-wife, etc.) this class can be used to represent a group of people who are
+		considered to be a family unit."""@en ;
+	rdfs:subClassOf foaf:Group ;
+	vs:term_status "testing" .
+
+:familyMember a rdf:Property ;
+	rdfs:label "familyMember" ;
+	rdfs:comment "Indicates a member of a Family" ;
+	rdfs:subPropertyOf foaf:member ;
+	rdfs:domain :Family ;
+	rdfs:range foaf:Person ;
+	vs:term_status "testing" .
 
 #---------- Names ----------
+
 :Name a owl:Class ;
 	rdfs:label "Name"@en ;
-	rdfs:comment "A personal name. Names are a class of their own to facilitate associating multiple names with the same individual, and to allow more different representations of names from what the FOAF name properties allow."@en ;
+	rdfs:comment """A personal name. Names are a class of their own to facilitate associating multiple names with
+		the same individual, and to allow different types of names or ways of representing them."""@en ;
+	vs:term_status "testing" .
 
 :name a rdf:Property ;
-	rdfs:label "Name"@en ;
-	rdfs:comment "A name."@en ;
+	rdfs:label "name"@en ;
+	rdfs:comment "A person's name."@en ;
 	rdfs:domain foaf:Person ;
-	rdfs:range :Name .
+	rdfs:range :Name ;
+	vs:term_status "testing" .
 
 :FoafName a owl:Class ;
 	rdfs:label "FOAF Name"@en ;
-	rdfs:comment "A name class aiming for maximum compatibility with FOAF. Individuals in this class are intended to be described using foaf's name properties, namely foaf:name, foaf:givenName, and foaf:familyName."@en ;
+	rdfs:comment """A name class aiming for maximum compatibility with FOAF. Individuals in this class are intended
+		to be described using foaf's name properties, namely foaf:name, foaf:givenName, and
+		foaf:familyName."""@en ;
 	rdfs:subClassOf :Name ;
+	vs:term_status "testing" .
+
+foaf:name a rdf:Property, owl:DatatypeProperty ;
+	rdfs:label "name" ;
+	rdfs:comment "A name for some thing." ;
+	rdfs:subPropertyOf rdfs:label .
+	rdfs:domain owl:Thing ;
+	rdfs:range rdfs:Literal ;
+	rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> ;
+
+foaf:givenName a rdf:Property, owl:DatatypeProperty ;
+	rdfs:label "Given name" ;
+	rdfs:comment "The given name of some person." ;
+	rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
+
+foaf:familyName a rdf:Property , owl:DatatypeProperty ;
+	rdfs:label "familyName" ;
+	rdfs:comment "The family name of some person." ;
+	rdfs:domain foaf:Person ;
+	rdfs:range rdfs:Literal ;
+	rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
 
 #---------- Source Citations ----------
 :Fact a owl:Class ;
 	rdfs:label "Fact"@en ;
-	rdfs:comment "An assertion of fact. Basically just a reified RDF statement, with the option of citing sources."@en ;
-	rdfs:subClassOf rdf:Statement .
+	rdfs:comment """An assertion of fact. Basically just a reified RDF statement, with the option of citing
+		sources."""@en ;
+	rdfs:subClassOf rdf:Statement ;
+	vs:term_status "unstable" .
 
 :source a rdf:Property ;
 	rdfs:label "Source"@en ;
-	rdfs:comment """A source justifying some claim of fact.
-		The range is deliberately left as general as possible (owl:Thing) because of the unsettled state of bibliographic vocabularies.
-		My recommendation is to use bibo:Document and its associated vocabulary, though frbr:Work seems reasonable, too. Surely there
-		are many other options---hopefully a clear standard emerges in the future."""@en ;
+	rdfs:comment """A source justifying some claim of fact. The range is deliberately left as general as possible
+		(owl:Thing) because of the unsettled state of bibliographic vocabularies. My recommendation is to use
+		bibo:Document and its associated vocabulary, though frbr:Work seems reasonable, too. Surely there are
+		many other options---hopefully a clear standard emerges in the future."""@en ;
 	rdfs:domain :Fact ;
-	rdfs:range owl:Thing .
+	rdfs:range owl:Thing ;
+	vs:term_status "unstable" .
 
-
-# After Wikipedia:MonumentalInscription
+#---------- Source Types ----------
+# See Wikipedia:MonumentalInscription
 :MonumentalInscription a owl:Class ;
 	rdfs:label "Monumental Inscription"@en ;
-	rdfs:comment "The general class of monumental inscriptions, defined by Wikipedia as 'an inscription, typically carved in stone, on a grave marker, cenotaph, memorial plaque, church monument or other memorial.'"@en ;
-	rdfs:subClassOf bibo:Document .
+	rdfs:comment """The general class of monumental inscriptions, defined by Wikipedia as 'an inscription, typically
+		carved in stone, on a grave marker, cenotaph, memorial plaque, church monument or other memorial.'"""@en ;
+	rdfs:subClassOf bibo:Document ;
+	vs:term_status "testing" .
 
 :GraveInscription a owl:Class ;
 	rdfs:label "Grave Inscription"@en ;
 	rdfs:comment "A grave inscription, such as on a tomb or headstone."@en ;
-	rdfs:subClassOf :MonumentalInscription .
+	rdfs:subClassOf :MonumentalInscription ;
+	vs:term_status "testing" .
 
-# After Wikipedia:Microform
+# See Wikipedia:Microform
 :Microform a owl:Class ;
 	rdfs:label "Microform"@en ;
-	rdfs:comment "The general class of microform media, defined by Wikipedia as 'any forms, either films or paper, containing microreproductions of documents for transmission, storage, reading, and printing.'"@en ;
-	rdfs:subClassOf bibo:Document .
+	rdfs:comment """The general class of microform media, defined by Wikipedia as 'any forms, either films or paper,
+		containing microreproductions of documents for transmission, storage, reading, and printing.'"""@en ;
+	rdfs:subClassOf bibo:Document ;
+	vs:term_status "testing" .
 
 :Microfilm a owl:Class ;
 	rdfs:label "Microfilm"@en ;
 	rdfs:comment "A microfilm reel"@en ;
-	rdfs:subClassOf :Microform .
+	rdfs:subClassOf :Microform ;
+	vs:term_status "testing" .
 
 :Microfiche a owl:Class ;
 	rdfs:label "Microfiche"@en ;
 	rdfs:comment "'A microfiche is a flat film 105 x 148 mm in size, that is ISO A6.' (Wikipedia:Microform)"@en ;
-	rdfs:subClassOf :Microform .
+	rdfs:subClassOf :Microform ;
+	vs:term_status "testing" .
