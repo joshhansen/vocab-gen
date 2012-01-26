@@ -278,20 +278,21 @@ foaf:familyName a rdf:Property , owl:DatatypeProperty ;
 	rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
 
 #---------- Source Citations ----------
-:Fact a owl:Class ;
-	rdfs:label "Fact"@en ;
-	rdfs:comment """An assertion of fact. Basically just a reified RDF statement, with the option of citing
-		sources."""@en ;
-	rdfs:subClassOf rdf:Statement ;
-	vs:term_status "unstable" .
+
+:Assertion a owl:Class ;
+	rdfs:subClassOf rdf:Statement .
+
+:subAssertion a rdf:Property ;
+	rdfs:domain :Assertion ;
+	rdfs:range :Assertion .
 
 :source a rdf:Property ;
 	rdfs:label "Source"@en ;
-	rdfs:comment """A source justifying some claim of fact. The range is deliberately left as general as possible
+	rdfs:comment """A source justifying some assertion or claim of fact. The range is deliberately left as general as possible
 		(owl:Thing) because of the unsettled state of bibliographic vocabularies. My recommendation is to use
 		bibo:Document and its associated vocabulary, though frbr:Work seems reasonable, too. Surely there are
 		many other options---hopefully a clear standard emerges in the future."""@en ;
-	rdfs:domain :Fact ;
+	rdfs:domain :Assertion ;
 	rdfs:range owl:Thing ;
 	vs:term_status "unstable" .
 
