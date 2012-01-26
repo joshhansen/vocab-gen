@@ -149,6 +149,12 @@ bio:Marriage rdf:type owl:Class ;
              rdfs:subClassOf bio:GroupEvent ;
              rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> .
 
+bio:Divorce rdf:type owl:Class ;
+            rdfs:label "Divorce"@en ;
+            rdfs:comment "The event of legally dissolving a marriage."@en ;
+            rdfs:subClassOf bio:GroupEvent ;
+            rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> .
+
 bio:Death rdf:type owl:Class ;
           rdfs:label "Death"@en ;
           rdfs:comment "The event of a person's life ending."@en ;
@@ -168,18 +174,22 @@ bio:Burial rdf:type owl:Class ;
 	rdfs:subPropertyOf bio:event ;
 	rdfs:domain foaf:Person ;
 	rdfs:range bio:Event ;
-	owl:inverseProperty :participant .
+	owl:inverseOf :participant .
 
 :birth rdf:type rdf:Property ;
-	rdfs:subPropertyOf :event, bio:event ;
+	rdfs:label "birth"@en ;
+	rdfs:comment "Specifies a person's birth event."@en ;
 	rdfs:domain foaf:Person ;
 	rdfs:range bio:Birth ;
-	owl:inverseProperty :child .
+	rdfs:subPropertyOf :lifeEvent, bio:event ;
+	owl:inverseOf :child .
 
 :death rdf:type rdf:Property ;
-	rdfs:subPropertyOf :event, bio:death ;
+	rdfs:label "death"@en ;
+	rdfs:comment "Specifies a person's death event."@en ;
 	rdfs:domain foaf:Person ;
-	rdfs:range bio:Death .
+	rdfs:range bio:Death ;
+	rdfs:subPropertyOf :lifeEvent, bio:death .
 
 
 #Event properties.
@@ -214,7 +224,14 @@ bio:Burial rdf:type owl:Class ;
 :child rdf:type rdf:Property ;
 	rdfs:domain bio:Birth ;
 	rdfs:range foaf:Person ;
-	rdfs:subPropertyOf :participant, bio:principal .
+	rdfs:subPropertyOf :participant, bio:principal ;
+	owl:inverseOf :birth .
+
+:deceased rdf:type rdf:Property ;
+	rdfs:domain bio:Death ;
+	rdfs:range foaf:Person ;
+	rdfs:subPropertyOf :participant, bio:principal ;
+	owl:inverseOf :death .
 
 
 #---------- Names ----------
