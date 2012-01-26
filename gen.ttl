@@ -14,6 +14,7 @@
 @prefix time:	<http://www.w3.org/2006/time#> .
 @prefix geo:	<http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix bibo:	<http://purl.org/ontology/bibo/> .
+@prefix bio: <http://purl.org/vocab/bio/0.1/> .
 
 #Meta
 @prefix dct:	<http://purl.org/dc/terms/> .
