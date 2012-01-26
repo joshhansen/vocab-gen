@@ -14,7 +14,7 @@
 @prefix time:	<http://www.w3.org/2006/time#> .
 @prefix geo:	<http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix bibo:	<http://purl.org/ontology/bibo/> .
-@prefix bio: <http://purl.org/vocab/bio/0.1/> .
+@prefix bio:	<http://purl.org/vocab/bio/0.1/> .
 
 #Meta
 @prefix dct:	<http://purl.org/dc/terms/> .
@@ -23,17 +23,17 @@
 
 
 <http://purl.org/gen/0.1#> rdf:type owl:Ontology ;
-	dct:title "Genealogy Vocabulary"@en ;
-	dct:date "2012-01-25"^^xsd:date ;
-	dct:abstract "An simple RDF vocabulary containing terms to facilitate the linking of genealogical data."@en ;
+	dct:title "Gen---A Vocabulary for Linked Genealogical Data"@en ;
+	dct:date "2012-01-26"^^xsd:date ;
+	dct:abstract "A simple RDF vocabulary containing terms to facilitate the linking of genealogical data."@en ;
 #	dct:description """<div>
 #        <p></p>
 #      </div>"""^^rdf:XMLLiteral ;
 #                                 dct:identifier "http://purl.org/vocab/bio/0.1/schema" ;
 	dct:creator "Josh Hansen"@en ;
 	dct:rights "Copyright © 2012 FamilySearch"@en ;
-	dct:issued "2012-01-25"^^xsd:date ;
-	vann:preferredNamespaceUri "http://purl.org/gen/0.1/"@en ;
+	dct:issued "2012-01-26"^^xsd:date ;
+	vann:preferredNamespaceUri "http://purl.org/gen/0.1#"@en ;
 	vann:preferredNamespacePrefix "gen"@en .
 
 
@@ -90,37 +90,50 @@ event:Event a owl:Class;
 	vs:term_status "testing" .
 
 :parent a rdf:Property ;
-	rdfs:comment "Prefixed with 'family' to disambiguate from 
+	rdfs:label "parent"@en ;
+	rdfs:comment "A parent in a family."@en ;
 	rdfs:domain :Family ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :familyMember .
 
 :mother a rdf:Property ;
+	rdfs:label "mother"@en ;
+	rdfs:comment "A mother of a family."@en ;
 	rdfs:domain :Family ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :parent .
 
 :father a rdf:Property ;
+	rdfs:label "father"@en ;
+	rdfs:comment "A father of a family."@en ;
 	rdfs:domain :Family ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :parent .
 
 :stepParent a rdf:Property ;
+	rdfs:label "stepParent"@en ;
+	rdfs:comment "A step-parent of a family."@en ;
 	rdfs:domain :Family ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :parent .
 
 :stepMother a rdf:Property ;
+	rdfs:label "stepMother"@en ;
+	rdfs:comment "A step-mother of a family."@en ;
 	rdfs:domain :Family ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :stepParent .
 
 :stepFather a rdf:Property ;
+	rdfs:label "stepFather"@en ;
+	rdfs:comment "A step-father of a family."@en ;
 	rdfs:domain :Family ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :stepParent .
 
 :child a rdf:Property ;
+	rdfs:label "child"@en ;
+	rdfs:comment "A child in a family."@en ;
 	rdfs:domain :Family ;
 	rdfs:range foaf:Person ;
 	rdfs:subPropertyOf :familyMember .
@@ -130,7 +143,6 @@ event:Event a owl:Class;
 	rdfs:comment """This container class should be populated with individual people, families, or other records
 		that constitute a single 'family tree'. It is intended to help users in management of their
 		genealogical data."""@en ;
-#	rdfs:subClassOf rdf:Bag ;
 	vs:term_status "testing" .
 
 
